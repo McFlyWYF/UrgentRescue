@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">应急救援</string>
+
+    <string name="weather_live">实时</string>
+    <string name="weather_forecast">预报</string>
+    <string name="report_time">发布时间</string>
+
+
+</resources>

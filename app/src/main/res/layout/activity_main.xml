@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.a16500.socketdemo.activity.MainActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/receive_tv"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="接收的内容："
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/send_tv"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="发送的内容"
+        android:gravity="center_vertical"
+        android:scrollbars="vertical"/>
+
+
+    <EditText
+        android:id="@+id/send_content_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入要发送的内容"/>
+
+    <Button
+        android:id="@+id/send_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送"/>
+
+    <Button
+        android:id="@+id/map_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="求救人员位置"/>
+
+
+</LinearLayout>

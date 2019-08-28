@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.a16500.socketdemo.sosppeople.activity.SosActivity"
+    android:orientation="vertical">
+
+    <FrameLayout
+
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="670dp"
+        android:orientation="vertical">
+
+    </FrameLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#000000"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/tb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/navigation"
+            android:layout_alignParentBottom="true">
+
+        </android.support.design.widget.BottomNavigationView>
+    </RelativeLayout>
+    
+
+
+</LinearLayout>

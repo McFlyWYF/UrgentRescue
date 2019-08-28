@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.a16500.socketdemo.activity.MapActivity">
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/normal_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标准模式"
+            android:layout_weight="1"
+            android:background="@drawable/btn_shape"
+            android:textColor="#ffffff"/>
+
+        <Button
+            android:id="@+id/satellite_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卫星模式"
+            android:layout_weight="1"
+            android:background="@drawable/btn_shape"
+            android:textColor="#ffffff"/>
+
+        <Button
+            android:id="@+id/night_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="夜景模式"
+            android:layout_weight="1"
+            android:background="@drawable/btn_shape"
+            android:textColor="#ffffff"/>
+
+        <Button
+            android:id="@+id/navi_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="导航模式"
+            android:layout_weight="1"
+            android:background="@drawable/btn_shape"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

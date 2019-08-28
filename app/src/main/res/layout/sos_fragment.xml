@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="救援中心信息"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/receive_tv"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="无"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="需要的物资"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:scrollbars="vertical"/>
+
+    <TextView
+        android:id="@+id/send_tv"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="无"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:scrollbars="vertical"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp">
+
+        <CheckBox
+            android:id="@+id/food_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="食物"/>
+
+        <CheckBox
+            android:id="@+id/water_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="水"/>
+
+        <CheckBox
+            android:id="@+id/medical_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="医疗"/>
+
+        <CheckBox
+            android:id="@+id/life_thing_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生活用品"/>
+
+        <CheckBox
+            android:id="@+id/urgent_thing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="紧急事件"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="被困人数："
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"/>
+
+    <Button
+        android:id="@+id/send_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/btn_shape"
+        android:textColor="#ffff"/>
+
+    <Button
+        android:id="@+id/query_weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="天气查询"
+        android:background="@drawable/btn_shape"
+        android:textColor="#ffff"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

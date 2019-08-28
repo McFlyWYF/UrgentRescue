@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/sos_message"
+        android:title="求救信息"
+        android:icon="@drawable/sos"/>
+
+    <item android:icon="@drawable/safe"
+        android:title="安全地带"
+        android:id="@+id/safe_area"/>
+
+    <item android:id="@+id/my_message"
+        android:title="我"
+        android:icon="@drawable/my"/>
+</menu>
