@@ -8,11 +8,11 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:src="@drawable/app_icon"/>
 
     <android.support.design.widget.TextInputLayout
 
@@ -21,14 +21,16 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/colorPrimaryDark">
 
         <EditText
             android:id="@+id/reg_account_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="用户名"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:backgroundTint="@color/colorPrimaryDark"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -46,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="密码"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:backgroundTint="@color/colorPrimaryDark"/>
 
     </android.support.design.widget.TextInputLayout>
 

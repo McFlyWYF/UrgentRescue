@@ -1,9 +1,16 @@
 package com.example.a16500.socketdemo.activity;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
@@ -16,9 +23,23 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.TileOverlayOptions;
 import com.example.a16500.socketdemo.R;
+import com.example.a16500.socketdemo.sosppeople.activity.SosActivity;
+import com.example.a16500.socketdemo.utils.LocationJs;
 import com.example.a16500.socketdemo.utils.LocationUtil;
+import com.example.a16500.socketdemo.utils.StaticClass;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MapActivity extends AppCompatActivity implements LocationSource, View.OnClickListener {
 
@@ -30,6 +51,8 @@ public class MapActivity extends AppCompatActivity implements LocationSource, Vi
 
     private Button normal, night, navi, satellite;
 
+    int message;
+    private double locationLat, locationLgtt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +71,65 @@ public class MapActivity extends AppCompatActivity implements LocationSource, Vi
         night.setOnClickListener(this);
         navi.setOnClickListener(this);
         satellite.setOnClickListener(this);
+
+        FloatingActionButton actionButton = findViewById(R.id.location_fresh);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onLocation();
+                Toast.makeText(MapActivity.this, "正在刷新中", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         init();
 
     }
 
+    //获取求救者位置信息
+    protected void onLocation() {
+        //拿到okhttpClient对象
+        OkHttpClient okHttpClient = new OkHttpClient();
+        //构造Request
+        Request.Builder builder = new Request.Builder();
+        Request request = builder.get().url(StaticClass.locationUrl).build();
+        //将request封装为Call
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MapActivity.this, "请求服务器失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String res = response.body().string();
+                Log.d("placeres=: ", res);
+                Gson gson = new Gson();
+                List<LocationJs> locationJss = gson.fromJson(res, new TypeToken<List<LocationJs>>() {
+                }.getType());
+
+                for (int i = 0; i < locationJss.size(); i++) {
+                    message = locationJss.get(i).getMessage();
+                    locationLat = locationJss.get(i).getLatitude();
+                    locationLgtt = locationJss.get(i).getLongitude();
+
+                    //求救者定位点
+                    LatLng locationLatLng = new LatLng(locationLat, locationLgtt);
+                    final Marker placeMarker = aMap.addMarker(new MarkerOptions().position(locationLatLng).title(String.valueOf(message)).draggable(false).setFlat(true));
+
+                    Log.d("placename", String.valueOf(message));
+                    Log.d("placeLgtt", String.valueOf(locationLat));
+                    Log.d("placeLat", String.valueOf(locationLgtt));
+                }
+            }
+        });
+    }
 
     private void init() {
         if (aMap == null) {
@@ -67,44 +145,32 @@ public class MapActivity extends AppCompatActivity implements LocationSource, Vi
         //显示定位层并可触发
         aMap.setMyLocationEnabled(true);
 
+    }
 
-        LatLng latLng1 = new LatLng(38.016021, 112.441172);
-        LatLng latLng2 = new LatLng(38.015021, 112.449172);
-        LatLng latLng3 = new LatLng(38.011033, 112.448172);
-        LatLng latLng4 = new LatLng(38.013055, 112.443172);
-        LatLng latLng5 = new LatLng(38.019088, 112.445172);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.data_menu,menu);
+        return true;
+    }
 
-        final Marker marker1 = aMap.addMarker(new MarkerOptions().position(latLng1).title("求救者1 ").snippet("水 ").draggable(false).setFlat(true));
-        final Marker marker2 = aMap.addMarker(new MarkerOptions().position(latLng2).title("求救者2 ").snippet("医疗，水").draggable(false).setFlat(true));
-        final Marker marker3 = aMap.addMarker(new MarkerOptions().position(latLng3).title("求救者3 ").snippet("食物").draggable(false).setFlat(true));
-        final Marker marker4 = aMap.addMarker(new MarkerOptions().position(latLng4).title("求救者4 ").snippet("紧急事件 ").draggable(false).setFlat(true));
-        final Marker marker5 = aMap.addMarker(new MarkerOptions().position(latLng5).title("求救者5 ").snippet("生活用品").draggable(false).setFlat(true));
-
-        LatLng[] latlngs = new LatLng[500];
-        double x = 38.015021;
-        double y = 112.449172;
-
-        for (int i = 0; i < 500; i++) {
-            double x_ = 0;
-            double y_ = 0;
-            x_ = Math.random() * 0.5 - 0.25;
-            y_ = Math.random() * 0.5 - 0.25;
-            latlngs[i] = new LatLng(x + x_, y + y_);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //创建菜单项的点击事件
+        switch (item.getItemId()) {
+            case R.id.things_view:
+                Intent intent = new Intent(MapActivity.this, ThingsViewActivity.class);
+                startActivity(intent);
+                Toast.makeText(MapActivity.this, "物资需求雷达图", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.sos_view:
+                Intent intent1 = new Intent(MapActivity.this, SosViewActivity.class);
+                startActivity(intent1);
+                Toast.makeText(MapActivity.this, "求救曲线图", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
         }
 
-        // 构建热力图 HeatmapTileProvider
-        HeatmapTileProvider.Builder builder = new HeatmapTileProvider.Builder();
-        builder.data(Arrays.asList(latlngs)); // 设置热力图绘制的数据
-        // Gradient 的设置可见参考手册
-        // 构造热力图对象
-        HeatmapTileProvider heatmapTileProvider = builder.build();
-
-        // 初始化 TileOverlayOptions
-        TileOverlayOptions tileOverlayOptions = new TileOverlayOptions();
-        tileOverlayOptions.tileProvider(heatmapTileProvider); // 设置瓦片图层的提供者
-        // 向地图上添加 TileOverlayOptions 类对象
-        aMap.addTileOverlay(tileOverlayOptions);
-
+        return super.onOptionsItemSelected(item);
     }
 
     private void setLocationCallBack() {
@@ -122,7 +188,6 @@ public class MapActivity extends AppCompatActivity implements LocationSource, Vi
             }
         });
     }
-
 
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
@@ -177,7 +242,8 @@ public class MapActivity extends AppCompatActivity implements LocationSource, Vi
             case R.id.navi_btn:
                 aMap.setMapType(AMap.MAP_TYPE_NAVI);// 设置导航地图模式，aMap是地图控制器对象。
                 break;
-
+            default:
+                break;
         }
     }
 }

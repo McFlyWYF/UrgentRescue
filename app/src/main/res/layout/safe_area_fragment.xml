@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:text="标准模式"
             android:layout_weight="1"
-            android:background="@drawable/btn_shape"
-            android:textColor="#ffffff"/>
+            android:background="#ffffff"
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/satellite_btn"
@@ -33,8 +33,8 @@
             android:layout_height="wrap_content"
             android:text="卫星模式"
             android:layout_weight="1"
-            android:background="@drawable/btn_shape"
-            android:textColor="#ffffff"/>
+            android:background="#ffffff"
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/night_btn"
@@ -42,17 +42,35 @@
             android:layout_height="wrap_content"
             android:text="夜景模式"
             android:layout_weight="1"
-            android:background="@drawable/btn_shape"
-            android:textColor="#ffffff"/>
+            android:background="#ffffff"
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/navi_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="导航模式"
-            android:layout_weight="1"
-            android:background="@drawable/btn_shape"
-            android:textColor="#ffffff"/>
+            android:background="#ffffff"
+            android:textColor="#000000"/>
+
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/location_fresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/fresh"/>
+
+    </RelativeLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>

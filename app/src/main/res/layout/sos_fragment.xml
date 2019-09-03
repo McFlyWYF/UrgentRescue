@@ -26,7 +26,8 @@
             android:layout_height="100dp"
             android:text="无"
             android:textColor="@color/colorAccent"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <TextView
@@ -45,7 +46,8 @@
         android:text="无"
         android:gravity="center"
         android:textColor="@color/colorAccent"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:textSize="16sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,19 +87,12 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="被困人数："
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"/>
-
     <Button
         android:id="@+id/send_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="发送"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/btn_shape"

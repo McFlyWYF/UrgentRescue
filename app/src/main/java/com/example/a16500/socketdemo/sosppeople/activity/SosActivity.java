@@ -83,7 +83,5 @@ public class SosActivity extends AppCompatActivity{
         setContentView(R.layout.activity_sos);
 
        initFragment();
-
     }
-
 }

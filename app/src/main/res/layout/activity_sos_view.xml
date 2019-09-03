@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:line="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.a16500.socketdemo.activity.SosViewActivity">
+
+    <tech.linjiang.suitlines.SuitLines
+        android:id="@+id/suitlines"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="160dp"
+        line:colorEdgeEffect="@color/colorPrimaryDark"
+        line:colorHint="@color/colorPrimary"
+        line:countOfY="6"
+        line:lineType="curve"
+        line:maxOfVisible="7"
+        line:needClickHint="true"
+        line:needEdgeEffect="true"
+        line:xyColor="@color/colorAccent"
+        line:xySize="8" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="求救人数曲线图"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>

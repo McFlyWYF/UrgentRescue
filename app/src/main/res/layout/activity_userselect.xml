@@ -6,34 +6,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.a16500.socketdemo.activity.UserSelectActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.a16500.socketdemo.activity.UserSelectActivity">
 
     <TextView
+        android:id="@+id/user_app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="应急救援"
+        android:layout_marginTop="100dp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="80dp"
+        android:text="应急救援"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark" />
+        android:textStyle="bold" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:src="@drawable/app_icon" />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="选择属于自己的系统进入"
-        android:textSize="20sp"
+        android:layout_marginTop="50dp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="50dp"/>
+        android:text="选择属于自己的系统进入"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,24 +45,24 @@
             android:id="@+id/sos_person_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="求救人员"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="100dp"
             android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:textColor="#ffffff"
-            android:background="@drawable/btn_shape"/>
+            android:background="@drawable/btn_shape"
+            android:text="求救人员"
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/rescue_person_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="搜救人员"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="100dp"
             android:layout_marginRight="20dp"
+            android:layout_marginTop="100dp"
             android:layout_weight="1"
-            android:textColor="#ffffff"
-            android:background="@drawable/btn_shape"/>
+            android:background="@drawable/btn_shape"
+            android:text="搜救人员"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
     <RelativeLayout
@@ -71,10 +72,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="版本 1.0"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"/>
+            android:text="版本 1.0" />
+
+        <Button
+            android:id="@+id/enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
+
 
 </LinearLayout>

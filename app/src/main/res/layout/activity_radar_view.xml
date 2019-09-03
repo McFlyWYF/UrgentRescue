@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.a16500.socketdemo.activity.ThingsViewActivity">
+
+    <rorbin.q.radarview.RadarView
+        android:id="@+id/radarView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="100dp"
+        app:layer_line_color="#99FFFFFF"
+        app:vertex_icon_margin="10dp"
+        app:vertex_icon_position="top"
+        app:vertex_icon_size="30dp"
+        app:vertex_line_color="#99FFFFFF"
+        app:vertex_text_color="#000000"
+        app:vertex_text_offset="30dp"
+        android:padding="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="物资需求雷达图"
+        android:textColor="#000000"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>

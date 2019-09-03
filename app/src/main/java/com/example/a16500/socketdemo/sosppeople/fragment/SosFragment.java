@@ -7,24 +7,37 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a16500.socketdemo.activity.StaticVar;
 import com.example.a16500.socketdemo.activity.WeatherSearchActivity;
 import com.example.a16500.socketdemo.utils.MoblieServer;
 import com.example.a16500.socketdemo.R;
 import com.example.a16500.socketdemo.utils.SendAsyncTask;
+import com.example.a16500.socketdemo.utils.SosJs;
+import com.example.a16500.socketdemo.utils.StaticClass;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by 16500 on 2019/8/28.
@@ -38,6 +51,10 @@ public class SosFragment extends Fragment implements CompoundButton.OnCheckedCha
     private CheckBox foods, water, medical, life_thing, urgent_thing;
 
     private Map<String, String> info = new HashMap<String, String>();
+
+    private int uid;
+
+    private int message;
 
     @Nullable
     @Override
@@ -88,8 +105,8 @@ public class SosFragment extends Fragment implements CompoundButton.OnCheckedCha
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    receive_tv.append("wifi发送的数据是：" + msg.obj + "  ");
-                    Toast.makeText(getActivity(), "接收到的信息是：" + msg.obj, Toast.LENGTH_SHORT).show();
+                    receive_tv.setText("求救信息是：" + msg.obj + "  ");
+                    Toast.makeText(getActivity(), "求救信息是：" + msg.obj, Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -99,18 +116,59 @@ public class SosFragment extends Fragment implements CompoundButton.OnCheckedCha
         switch (view.getId()) {
             case R.id.send_btn:
                 StringBuilder builder = new StringBuilder();
+                StringBuilder builder1 = new StringBuilder();
+
                 if (info.size() == 0) {
                     send_tv.setText("没有需要的物资！！！");
                     Toast.makeText(getActivity(), "没有需要的物资", Toast.LENGTH_SHORT).show();
                 } else {
                     for (String key : info.keySet()) {
                         builder.append(info.get(key));
+                        Log.d("info", String.valueOf(info.keySet()));
+
+                        if (info.get(key).equals("食物、")) {
+                            builder1.append(1);
+                        }
+                        if (info.get(key).equals("水、")) {
+                            builder1.append(2);
+                        }
+                        if (info.get(key).equals("医疗、")) {
+                            builder1.append(3);
+                        }
+                        if (info.get(key).equals("生活用品、")) {
+                            builder1.append(4);
+                        }
+                        if (info.get(key).equals("紧急事件、")) {
+                            builder1.append(5);
+                        }
                     }
                     send_tv.setText(builder);
-                    Toast.makeText(getActivity(), "所需要的物资是：" + builder, Toast.LENGTH_SHORT).show();
 
+                    Log.d("info", String.valueOf(builder1));
+
+                    uid = StaticVar.uid;
+
+                    DecimalFormat df = new DecimalFormat("0.000000");
+                    double lat = Double.parseDouble(df.format(StaticVar.lat));
+                    double lgtt = Double.parseDouble(df.format(StaticVar.lgtt));
+
+                    Log.d("uid", String.valueOf(uid));
+                    Log.d("lgtt", String.valueOf(lgtt));
+                    Log.d("lat", String.valueOf(lat));
+
+                    message = Integer.parseInt(String.valueOf(builder1));
+                    onSend(uid, message, lgtt, lat);
+                    Toast.makeText(getActivity(), "所需要的物资是：" + builder, Toast.LENGTH_SHORT).show();
                 }
-                new SendAsyncTask().execute(String.valueOf(builder));
+
+                String str = String.valueOf(message);
+                char[] strChar = str.toCharArray();
+                String result = "";
+                for (int i = 0; i < strChar.length; i++) {
+                    result += Integer.toHexString(strChar[i]) + "";
+                }
+                Log.d("dataBinary",result);
+                new SendAsyncTask().execute(result);
                 break;
 
             case R.id.query_weather:
@@ -131,7 +189,6 @@ public class SosFragment extends Fragment implements CompoundButton.OnCheckedCha
                     info.put("food", "食物、");
                 } else {
                     info.remove("food");
-                    ;
                 }
                 break;
 
@@ -140,16 +197,14 @@ public class SosFragment extends Fragment implements CompoundButton.OnCheckedCha
                     info.put("water", "水、");
                 } else {
                     info.remove("water");
-                    ;
                 }
                 break;
 
             case R.id.medical_cb:
                 if (b) {
-                    info.put("medical", "医疗 、");
+                    info.put("medical", "医疗、");
                 } else {
                     info.remove("medical");
-                    ;
                 }
                 break;
 
@@ -158,7 +213,6 @@ public class SosFragment extends Fragment implements CompoundButton.OnCheckedCha
                     info.put("life", "生活用品、");
                 } else {
                     info.remove("life");
-                    ;
                 }
                 break;
 
@@ -167,7 +221,6 @@ public class SosFragment extends Fragment implements CompoundButton.OnCheckedCha
                     info.put("thing", "紧急事件、");
                 } else {
                     info.remove("thing");
-                    ;
                 }
                 break;
 
@@ -175,5 +228,43 @@ public class SosFragment extends Fragment implements CompoundButton.OnCheckedCha
                 break;
 
         }
+    }
+
+    protected void onSend(int uid, int message, double longitude, double latitude) {
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request.Builder builder = new Request.Builder();
+        FormBody.Builder bodyBuilder = new FormBody.Builder();
+        Request request = builder.get().url(StaticClass.sendMsgUrl + "?uid=" + uid + "&message=" + message + "&longitude=" + longitude + "&latitude=" + latitude).build();
+        Call call = okHttpClient.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), "网络请求失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String res = response.body().string();
+                Log.d("res=: ", res);
+                Gson gson = new Gson();
+                SosJs sosJs = gson.fromJson(res, new TypeToken<SosJs>() {
+
+                }.getType());
+                if (sosJs.getCode() == 1) {
+
+                } else if (sosJs.getCode() == 0) {
+
+                }
+            }
+        });
+
     }
 }
